@@ -71,3 +71,9 @@ stamp-*
 /gmp*
 /isl*
 /gettext*
+
+# ignore build directory
+build/
+
+# clion configure files
+.idea/
