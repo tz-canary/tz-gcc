@@ -58,6 +58,7 @@ extern bool default_preferred_div_as_shifts_over_mult
 extern int default_mode_rep_extended (scalar_int_mode, scalar_int_mode);
 
 extern tree default_stack_protect_guard (void);
+extern tree stack_protect_guard_tee(void);
 extern tree default_external_stack_protect_fail (void);
 extern tree default_hidden_stack_protect_fail (void);
 

@@ -946,6 +946,40 @@ default_stack_protect_guard (void)
   return t;
 }
 
+// Modify: tee-isolated stack canary
+static GTY(()) tree tee_stack_chk_guard_decl;
+
+tree
+stack_protect_guard_tee (void)
+{
+    tree t = tee_stack_chk_guard_decl;
+
+    if (t == NULL_TREE)
+    {
+        rtx x;
+
+        t = build_function_type_list (void_type_node, NULL_TREE);
+        t = build_decl (UNKNOWN_LOCATION,
+                FUNCTION_DECL, get_identifier ("__stack_chk_guard_tee"), t);
+        TREE_STATIC (t) = 1;
+        TREE_PUBLIC (t) = 1;
+        DECL_EXTERNAL (t) = 1;
+        TREE_USED (t) = 1;
+        TREE_THIS_VOLATILE (t) = 1;
+        TREE_NOTHROW (t) = 1;
+        DECL_ARTIFICIAL (t) = 1;
+        DECL_IGNORED_P (t) = 1;
+        DECL_VISIBILITY (t) = VISIBILITY_DEFAULT;
+        DECL_VISIBILITY_SPECIFIED (t) = 1;
+
+        x = DECL_RTL (t);
+        RTX_FLAG (x, used) = 1;
+
+        tee_stack_chk_guard_decl = t;
+    }
+    return t;
+}
+
 static GTY(()) tree stack_chk_fail_decl;
 
 tree
