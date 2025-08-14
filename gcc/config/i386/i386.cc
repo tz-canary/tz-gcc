@@ -103,6 +103,8 @@ along with GCC; see the file COPYING3.  If not see
 #include "gimple-pretty-print.h"
 
 /* This file should be included last.  */
+#include <cstddef>
+
 #include "target-def.h"
 
 static void ix86_print_operand_address_as (FILE *, rtx, addr_space_t, bool);
@@ -25197,6 +25199,10 @@ static GTY(()) tree ix86_tls_stack_chk_guard_decl;
 static tree
 ix86_stack_protect_guard (void)
 {
+  // if (flag_stack_protect_tee) {
+  //   return stack_protect_guard_tee();
+  // }
+
   if (TARGET_SSP_TLS_GUARD)
     {
       tree type_node = lang_hooks.types.type_for_mode (ptr_mode, 1);
