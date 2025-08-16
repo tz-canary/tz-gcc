@@ -25194,6 +25194,19 @@ ix86_emit_support_tinfos (emit_support_tinfos_callback callback)
     }
 }
 
+static GTY(()) tree ix86_stack_protect_guard_tee_decl;
+
+rtx
+ix86_stack_protect_guard_tee (machine_mode mode)
+{
+	rtx func = gen_rtx_SYMBOL_REF (Pmode, "__stack_protect_guard_tee");
+	rtx target = gen_rtx_REG (mode, AX_REG);
+	rtx mem = gen_rtx_MEM (QImode, func);
+	emit_call_insn (gen_call_value (target, mem, const0_rtx, const0_rtx));
+
+	return target;
+}
+
 static GTY(()) tree ix86_tls_stack_chk_guard_decl;
 
 static tree

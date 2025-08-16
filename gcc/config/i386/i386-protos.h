@@ -29,6 +29,7 @@ extern bool ix86_can_use_return_insn_p (void);
 extern bool ix86_function_ms_hook_prologue (const_tree fn);
 extern void ix86_setup_frame_addresses (void);
 extern bool ix86_rip_relative_addr_p (struct ix86_address *parts);
+extern rtx ix86_stack_protect_guard_tee (machine_mode);
 
 extern HOST_WIDE_INT ix86_initial_elimination_offset (int, int);
 extern void ix86_expand_prologue (void);
