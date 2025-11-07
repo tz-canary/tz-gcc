@@ -8332,7 +8332,13 @@
    (clobber (match_scratch:PTR 2 "=&r"))
    (clobber (match_scratch:PTR 3 "=&r"))]
   ""
-  "ldr\t%<w>2, %0\;ldr\t%<w>3, %1\;subs\t%<w>2, %<w>2, %<w>3\;mov\t%3, 0"
+  {
+    if (flag_stack_protect_tee) {
+      return "bl __stack_protect_tee\;ldr\t%<w>2, %0\;subs\t<w>0, <w>0, %<w>2\;mov\t%<w>2, 0";
+    }
+    return "ldr\t%<w>2, %0\;ldr\t%<w>3, %1\;subs\t%<w>2, %<w>2, %<w>3\;mov\t%3, 0";
+  }
+  
   [(set_attr "length" "16")
    (set_attr "type" "multiple")])
 

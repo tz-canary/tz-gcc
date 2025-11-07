@@ -6717,6 +6717,7 @@ aarch64_stack_protect_canary_mem (machine_mode mode, rtx decl_rtl,
 {
   rtx addr;
   if (flag_stack_protect_tee) {
+	  aarch64_stack_protector_guard = SSP_SYSREG;  // for emitting stack_protect_combined_test & stack_protect_test
       rtx salt = GEN_INT (salt_type);
       addr = gen_reg_rtx (mode);
       if (mode == DImode)
