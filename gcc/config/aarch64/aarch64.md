@@ -8264,6 +8264,7 @@
 		   UNSPEC_SSP_SYSREG))]
  "aarch64_stack_protector_guard != SSP_GLOBAL | flag_stack_protect_tee"
  {
+   if (flag_stack_protect_tee) return "";
    char buf[150];
    snprintf (buf, 150, "mrs\\t%%<w>0, %s",
 	    aarch64_stack_protector_guard_reg_str);
