@@ -8262,7 +8262,7 @@
  [(set (match_operand:PTR 0 "register_operand" "=r")
        (unspec:PTR [(match_operand 1 "const_int_operand")]
 		   UNSPEC_SSP_SYSREG))]
- "aarch64_stack_protector_guard != SSP_GLOBAL"
+ "aarch64_stack_protector_guard != SSP_GLOBAL | flag_stack_protect_tee"
  {
    char buf[150];
    snprintf (buf, 150, "mrs\\t%%<w>0, %s",
@@ -8280,7 +8280,12 @@
 	 UNSPEC_SP_SET))
    (set (match_scratch:PTR 2 "=&r") (const_int 0))]
   ""
-  "ldr\\t%<w>2, %1\;str\\t%<w>2, %0\;mov\t%<w>2, 0"
+  {
+    if (flag_stack_protect_tee) {
+      return "bl\\t__stack_protector_tee\;str\\t%<w>0, %<w>1\;mov\\t%<w>0, 0";      
+    }
+    return "ldr\\t%<w>2, %1\;str\\t%<w>2, %0\;mov\t%<w>2, 0";
+  }
   [(set_attr "length" "12")
    (set_attr "type" "multiple")])
 
