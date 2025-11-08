@@ -8283,7 +8283,7 @@
   ""
   {
     if (flag_stack_protect_tee) {
-      return "bl\\t__stack_protector_tee\;str\\t%<w>0, %<w>1\;mov\\t%<w>0, 0";      
+      return "bl\t__stack_protector_tee\;str\tx0, %0\;mov\tx0, 0";      
     }
     return "ldr\\t%<w>2, %1\;str\\t%<w>2, %0\;mov\t%<w>2, 0";
   }
