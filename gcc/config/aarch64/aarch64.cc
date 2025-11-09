@@ -6716,7 +6716,7 @@ aarch64_stack_protect_canary_mem (machine_mode mode, rtx decl_rtl,
 				  aarch64_salt_type salt_type)
 {
   rtx addr;
-  if (flag_stack_protect_tee) {
+  if (flag_stack_protect_spe) {
 	  aarch64_stack_protector_guard = SSP_SYSREG;  // for emitting stack_protect_combined_test & stack_protect_test
       rtx salt = GEN_INT (salt_type);
       addr = gen_reg_rtx (mode);
@@ -7623,7 +7623,7 @@ aarch64_layout_arg (cumulative_args_t pcum_v, const function_arg_info &arg)
        } foo;
 
      is still a HVA despite its larger-than-normal alignment.
-     However, such over-aligned HFAs and HVAs are guaranteed to have
+     However, such over-aligned HFAs and HVAs are guaransped to have
      no padding.
 
      If we exclude HFAs and HVAs from the discussion below, then there
